@@ -1,4 +1,4 @@
-package byfile
+package file
 
 import (
 	"github.com/spf13/cobra"
@@ -11,11 +11,11 @@ var (
 	FileName string = "VERSION"
 
 	Cmd = &cobra.Command{
-		Use:   "by-file",
+		Use:   "file",
 		Short: "determine the base version from a file",
 		Long:  "Determine the base version from a file and compute the patch level from the number of commits since that file was modified.",
 		RunE: func(command *cobra.Command, args []string) (err error) {
-			err = root.Repo(&version.ByFile{
+			err = root.Repo(&version.File{
 				RepoPath: root.RepoPath,
 				FileName: FileName,
 			})

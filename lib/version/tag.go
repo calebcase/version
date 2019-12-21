@@ -10,13 +10,13 @@ import (
 	"gopkg.in/src-d/go-git.v4/plumbing"
 )
 
-type ByTag struct {
+type Tag struct {
 	v *semver.Version
 }
 
-var _ Versioner = (*ByTag)(nil)
+var _ Versioner = (*Tag)(nil)
 
-func (bt *ByTag) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
+func (t *Tag) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
 	iter, err := r.Tags()
 	if err != nil {
 		return
@@ -39,8 +39,8 @@ func (bt *ByTag) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
 			return nil
 		}
 
-		if bt.v == nil || v.GT(*bt.v) {
-			bt.v = v
+		if t.v == nil || v.GT(*t.v) {
+			t.v = v
 			hash = ref.Hash()
 			found = true
 		}
@@ -57,6 +57,6 @@ func (bt *ByTag) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
 	return hash, nil
 }
 
-func (bt *ByTag) Version() (v *semver.Version, err error) {
-	return bt.v, nil
+func (t *Tag) Version() (v *semver.Version, err error) {
+	return t.v, nil
 }

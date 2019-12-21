@@ -13,16 +13,16 @@ import (
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 )
 
-type ByFile struct {
+type File struct {
 	RepoPath string
 	FileName string
 }
 
-var _ Versioner = (*ByFile)(nil)
+var _ Versioner = (*File)(nil)
 
-func (bf *ByFile) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
+func (f *File) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
 	iter, err := r.Log(&git.LogOptions{
-		FileName: &bf.FileName,
+		FileName: &f.FileName,
 	})
 	if err != nil {
 		return
@@ -46,13 +46,13 @@ func (bf *ByFile) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) 
 	return hash, nil
 }
 
-func (bf *ByFile) Version() (v *semver.Version, err error) {
-	f, err := os.Open(filepath.Join(bf.RepoPath, bf.FileName))
+func (f *File) Version() (v *semver.Version, err error) {
+	vf, err := os.Open(filepath.Join(f.RepoPath, f.FileName))
 	if err != nil {
 		return
 	}
 
-	line := bufio.NewScanner(f)
+	line := bufio.NewScanner(vf)
 	line.Scan()
 
 	v, err = semver.New(line.Text())

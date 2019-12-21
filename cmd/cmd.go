@@ -5,9 +5,9 @@ import (
 
 	"github.com/inconshreveable/log15"
 
-	_ "github.com/calebcase/version/cmd/byfile"
-	_ "github.com/calebcase/version/cmd/bytag"
+	_ "github.com/calebcase/version/cmd/file"
 	"github.com/calebcase/version/cmd/root"
+	_ "github.com/calebcase/version/cmd/tag"
 )
 
 func Main() {
