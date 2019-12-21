@@ -42,6 +42,9 @@ jobs:
       - name: 'Tag'
         shell: 'bash'
         run: |
+          git config --global user.email 'actions@github.com'
+          git config --global user.name 'GitHub Actions'
+
           name="v$(go run main.go file)"
           git tag -a "$name" -m ''
       - name: 'Release'
