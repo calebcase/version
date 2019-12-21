@@ -47,10 +47,3 @@ jobs:
       - name: 'Test'
         run: |
           go test ./...
-      - name: 'Tag'
-        if: "github.ref == 'refs/heads/master'"
-        shell: 'bash'
-        run: |
-          name="v$(go run main.go file)"
-          git tag -a "$name" -m ''
-          git push origin "$name"
