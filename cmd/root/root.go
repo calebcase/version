@@ -18,7 +18,7 @@ var (
 
 	Cmd = &cobra.Command{
 		Use:   "version",
-		Short: "autogenerate verions with patch level",
+		Short: "autogenerate versions with patch level",
 	}
 )
 
