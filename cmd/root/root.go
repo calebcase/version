@@ -50,7 +50,7 @@ func init() {
 	flags.StringVarP(&RepoPath, "repopath", "r", RepoPath, "base path for the repository")
 }
 
-// SetLogger adjusts the logger Log to with the given log level, verbosity, and
+// SetLogger adjusts the logger Log with the given log level, verbosity, and
 // format.
 func SetLogger(lvl log15.Lvl, verbosity uint, format log15.Format) {
 	sh := log15.StreamHandler(os.Stderr, format)
