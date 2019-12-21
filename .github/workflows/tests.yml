@@ -31,15 +31,26 @@ jobs:
           echo "::add-path::$(go env GOPATH)/bin"
           git config --global core.autocrlf false
       - name: 'Install Linter'
+        shell: 'bash'
         run: |
           git clone https://github.com/golangci/golangci-lint -b v1.21.0
           cd golangci-lint/cmd/golangci-lint
           go install
       - name: 'Checkout code'
         uses: 'actions/checkout@v1'
+        with:
+          fetch-depth: 0
       - name: 'Lint'
+        shell: 'bash'
         run: |
           golangci-lint run
       - name: 'Test'
         run: |
           go test ./...
+      - name: 'Tag'
+        if: 'github.ref == "refs/heads/master"'
+        shell: 'bash'
+        run: |
+          name="v$(go run main.go file)"
+          git tag -a "$name" -m ''
+          git push origin "$name"
