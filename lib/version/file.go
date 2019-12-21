@@ -13,6 +13,7 @@ import (
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 )
 
+// File implements Versioner using a file in the repository.
 type File struct {
 	RepoPath string
 	FileName string
@@ -20,6 +21,7 @@ type File struct {
 
 var _ Versioner = (*File)(nil)
 
+// LastCommit returns the commit hash containing the last change to FileName.
 func (f *File) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
 	iter, err := r.Log(&git.LogOptions{
 		FileName: &f.FileName,
@@ -46,6 +48,7 @@ func (f *File) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
 	return hash, nil
 }
 
+// Version returns the base version found by parsing the contents of FileName.
 func (f *File) Version() (v *semver.Version, err error) {
 	vf, err := os.Open(filepath.Join(f.RepoPath, f.FileName))
 	if err != nil {

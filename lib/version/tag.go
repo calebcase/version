@@ -10,12 +10,17 @@ import (
 	"gopkg.in/src-d/go-git.v4/plumbing"
 )
 
+// Tag implements Versioner using a tag in the repository.
 type Tag struct {
 	v *semver.Version
 }
 
 var _ Versioner = (*Tag)(nil)
 
+// LastCommit returns the commit hash containing of the most recent version
+// tag. A tag is considered to contain a version if the tag name is parsable as
+// a semantic version (https://semver.org/) with an optional leading 'v' (e.g.
+// v1.2.3 or 5.3.0).
 func (t *Tag) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
 	iter, err := r.Tags()
 	if err != nil {
@@ -57,6 +62,7 @@ func (t *Tag) LastCommit(r *git.Repository) (hash plumbing.Hash, err error) {
 	return hash, nil
 }
 
+// Version returns the base version found by parsing the tag name.
 func (t *Tag) Version() (v *semver.Version, err error) {
 	return t.v, nil
 }

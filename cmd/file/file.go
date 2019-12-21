@@ -8,8 +8,11 @@ import (
 )
 
 var (
+	// FileName is the file that will be read for the base version and last
+	// commit.
 	FileName string = "VERSION"
 
+	// Cmd is the file command for the CLI.
 	Cmd = &cobra.Command{
 		Use:   "file",
 		Short: "determine the base version from a file",

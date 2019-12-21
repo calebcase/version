@@ -12,10 +12,13 @@ import (
 )
 
 var (
+	// Log is the logger for the CLI.
 	Log = log15.New()
 
+	// RepoPath is the path to the repository.
 	RepoPath = "."
 
+	// Cmd is the root command for the CLI.
 	Cmd = &cobra.Command{
 		Use:   "version",
 		Short: "autogenerate versions with patch level",
@@ -47,6 +50,8 @@ func init() {
 	flags.StringVarP(&RepoPath, "repopath", "r", RepoPath, "base path for the repository")
 }
 
+// SetLogger adjusts the logger Log to with the given log level, verbosity, and
+// format.
 func SetLogger(lvl log15.Lvl, verbosity uint, format log15.Format) {
 	sh := log15.StreamHandler(os.Stderr, format)
 	fh := log15.LvlFilterHandler(lvl, sh)
@@ -66,6 +71,7 @@ func SetLogger(lvl log15.Lvl, verbosity uint, format log15.Format) {
 	Log.SetHandler(fh)
 }
 
+// Repo prints the repository version.
 func Repo(vr version.Versioner) (err error) {
 	r, err := git.PlainOpen(RepoPath)
 	if err != nil {

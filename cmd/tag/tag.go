@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	// Cmd is the tag command for the CLI.
 	Cmd = &cobra.Command{
 		Use:   "tag",
 		Short: "determine the base version from the tags",
